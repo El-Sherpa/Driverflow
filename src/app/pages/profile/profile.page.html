@@ -1,0 +1,97 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="profile-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="profile-wrapper">
+    <div class="grid-background"></div>
+
+    <!-- Banner de Asociación de Empresa -->
+    <div class="company-code-banner">
+      <div class="banner-content">
+        <span class="banner-text">¿Tienes un código de empresa? Asóciate aquí:</span>
+        <div class="input-row">
+          <input type="text" [(ngModel)]="companyCode" placeholder="Código de empresa" class="code-input">
+          <button class="btn-associate" (click)="associateCompany()">Asociar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-profile-card">
+      <!-- Sección de Foto -->
+      <div class="photo-section">
+        <div class="photo-container">
+          <img [src]="profile.profilePhotoUrl" alt="Profile Photo">
+          <div class="edit-overlay">
+            <ion-icon name="camera"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario de Perfil -->
+      <div class="profile-form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>{{ t('NOMBRE_USUARIO') }}</label>
+            <input type="text" [(ngModel)]="profile.username" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('EMAIL') }}</label>
+            <input type="email" [(ngModel)]="profile.email" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('NUMERO_IDENTIFICACION') }}</label>
+            <input type="text" [(ngModel)]="profile.identification" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('CIUDAD') }}</label>
+            <input type="text" [(ngModel)]="profile.city" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('RH') }}</label>
+            <input type="text" [(ngModel)]="profile.rh" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('GRUPO_SANGUINEO') }}</label>
+            <input type="text" [(ngModel)]="profile.bloodGroup" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('NOMBRES') }}</label>
+            <input type="text" [(ngModel)]="profile.firstName" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('APELLIDOS') }}</label>
+            <input type="text" [(ngModel)]="profile.lastName" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('AÑO_NACIMIENTO') }}</label>
+            <input type="text" [(ngModel)]="profile.birthYear" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('DIRECCION') }}</label>
+            <input type="text" [(ngModel)]="profile.address" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>{{ t('TELEFONO') }}</label>
+            <input type="tel" [(ngModel)]="profile.phone" class="form-input">
+          </div>
+          <div class="form-group full-width">
+            <label>{{ t('LINK_FOTO_PERFIL') }}</label>
+            <input type="text" [(ngModel)]="profile.profilePhotoUrl" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-update" (click)="updateProfile()">
+            {{ t('ACTUALIZAR_PERFIL') }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

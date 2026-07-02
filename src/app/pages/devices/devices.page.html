@@ -1,0 +1,70 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="devices-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ t('DISPOSITIVOS') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="devices-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="devices-card">
+      <div class="header-section">
+        <h1 class="page-title">{{ t('GESTIÓN_DE_DISPOSITIVOS_GPS') }}</h1>
+      </div>
+
+      <div class="search-section">
+        <div class="search-input-wrapper">
+          <input 
+            type="text" 
+            [(ngModel)]="searchQuery" 
+            [placeholder]="t('BUSCAR_POR_PLACA') + '...'" 
+            class="search-input"
+          />
+        </div>
+        <button class="btn-search" (click)="onSearch()">{{ t('BUSCAR') }}</button>
+      </div>
+
+      <div class="status-section">
+        <h2 class="section-title">{{ t('VEHÍCULOS_CON_GPS_ACTIVO') }}</h2>
+        <div class="empty-state" *ngIf="filteredActive.length === 0">
+          {{ t('NO_HAY_VEHÍCULOS_CON_GPS_ACTIVO') }}
+        </div>
+        <div class="device-list" *ngIf="filteredActive.length > 0">
+          <div class="device-item" *ngFor="let device of filteredActive">
+            <div class="device-info">
+              <ion-icon name="car-outline" class="device-icon"></ion-icon>
+              <span class="device-plate">{{ device.plate }}</span>
+            </div>
+            <div class="device-status active">
+              <span class="status-dot"></span>
+              {{ t('ACTIVO') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-section">
+        <h2 class="section-title">{{ t('VEHÍCULOS_CON_GPS_INACTIVO') }}</h2>
+        <div class="empty-state" *ngIf="filteredInactive.length === 0">
+          {{ t('NO_HAY_VEHÍCULOS_CON_GPS_INACTIVO') }}
+        </div>
+        <div class="device-list" *ngIf="filteredInactive.length > 0">
+          <div class="device-item" *ngFor="let device of filteredInactive">
+            <div class="device-info">
+              <ion-icon name="car-outline" class="device-icon"></ion-icon>
+              <span class="device-plate">{{ device.plate }}</span>
+            </div>
+            <div class="device-status inactive">
+              <span class="status-dot"></span>
+              Inactivo
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

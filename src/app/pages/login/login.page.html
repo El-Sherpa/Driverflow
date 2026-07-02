@@ -1,0 +1,41 @@
+<ion-content [fullscreen]="true">
+  <div class="login-wrapper">
+    <div class="grid-background"></div>
+    <div class="decorative-line"></div>
+    
+    <div class="login-container">
+      <div class="logo-section">
+        <img src="./assets/images/logo2.png" alt="DriveFlow" class="nav-logo" />
+        <h1 class="brand-title">DRIVEFLOW</h1>
+      </div>
+
+      <div class="login-card-minimal">
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <div class="input-container">
+            <ion-item lines="none" class="minimal-input">
+              <ion-input formControlName="username" placeholder="Usuario o Email"></ion-input>
+            </ion-item>
+          </div>
+
+          <div class="input-container">
+            <ion-item lines="none" class="minimal-input">
+              <ion-input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="••••••••••••"></ion-input>
+              <ion-button fill="clear" slot="end" (click)="togglePassword()" class="eye-btn">
+                <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </div>
+
+          <ion-button expand="block" type="submit" [disabled]="!loginForm.valid" class="action-btn-minimal">
+            INICIAR SESIÓN
+          </ion-button>
+        </form>
+      </div>
+
+      <div class="footer-links">
+        <a (click)="$event.preventDefault()" class="link">¿Olvidaste tu contraseña?</a>
+        <a routerLink="/register" class="register-link">Registrarse aquí</a>
+      </div>
+    </div>
+  </div>
+</ion-content>

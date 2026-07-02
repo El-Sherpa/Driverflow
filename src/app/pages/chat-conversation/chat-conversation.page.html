@@ -1,0 +1,52 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="chat-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ participantName }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="chat-content">
+  <div class="chat-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="messages-container" *ngIf="messages.length > 0">
+      <div class="message" *ngFor="let msg of messages" [ngClass]="{ 'mine': msg.isAdmin === (sender.role === 'admin'), 'theirs': msg.isAdmin !== (sender.role === 'admin') }">
+        <div class="message-bubble">
+          <p class="message-text">{{ msg.text }}</p>
+          <span class="message-time">{{ msg.time }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-messages" *ngIf="messages.length === 0">
+      <div class="empty-icon">
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+      </div>
+      <p class="empty-text">{{ t('ESCRIBE_TU_PRIMER_MENSAJE') }}</p>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="chat-footer">
+    <div class="message-input-container">
+      <ion-input 
+        class="message-input" 
+        [(ngModel)]="newMessage" 
+        placeholder="{{ t('ESCRIBE_UN_MENSAJE') }}"
+        (keyup.enter)="sendMessage()"
+      ></ion-input>
+      <ion-button 
+        class="send-button" 
+        [disabled]="!canSend()" 
+        (click)="sendMessage()"
+      >
+        <ion-icon slot="icon-only" name="send-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-footer>

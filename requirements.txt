@@ -1,0 +1,47 @@
+# 🗂️ Requisitos del Proyecto - DriveFlow Mobile
+
+Este documento detalla las dependencias y el entorno necesario para ejecutar y desplegar la aplicación móvil de DriveFlow.
+
+## 🛠️ Tecnologías Principales
+- **Ionic Framework v8.0.0+** (Framework de UI híbrido)
+- **Angular v20.0.0+** (Framework de aplicaciones web)
+- **Capacitor v8.2.0+** (Bridge nativo para Android/iOS)
+- **TypeScript v5.9.0+** (Lenguaje de programación)
+
+## 📦 Dependencias del Sistema
+Para instalar y ejecutar el proyecto, asegúrate de tener instalado:
+- **Node.js**: v20.0.0 o superior
+- **npm**: v10.0.0 o superior
+- **Ionic CLI**: `npm install -g @ionic/cli`
+- **Android Studio**: Para compilación y despliegue en Android (con SDK 34+)
+
+## 🚀 Instalación de Dependencias
+Ejecuta el siguiente comando en la raíz del proyecto:
+```bash
+npm install
+```
+
+## 🗺️ Servicios Externos
+La aplicación utiliza los siguientes servicios:
+- **MapLibre GL**: Para la visualización de mapas vectoriales.
+- **OSRM (Open Source Routing Machine)**: API para el cálculo de rutas y navegación.
+- **Capacitor Geolocation**: Para el rastreo de ubicación en tiempo real.
+
+## 📲 Comandos de Compilación
+### Generar Build de Producción:
+```bash
+npm run build
+```
+
+### Sincronizar con Android:
+```bash
+npx cap sync android
+```
+
+### Abrir en Android Studio:
+```bash
+npx cap open android
+```
+
+---
+*DriveFlow - Conectando tu camino con tecnología.*

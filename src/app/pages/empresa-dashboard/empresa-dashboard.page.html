@@ -1,0 +1,74 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="company-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ companyName }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="dashboard-wrapper">
+    <div class="grid-background"></div>
+
+    <!-- Header / Welcome -->
+    <div class="welcome-section">
+      <h1 class="welcome-title">Panel de Control Flota</h1>
+      <p class="welcome-subtitle">Estado actual de sus vehículos y servicios.</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card" *ngFor="let stat of stats">
+        <div class="stat-icon" [style.background-color]="stat.color + '20'" [style.color]="stat.color">
+          <ion-icon [name]="stat.icon"></ion-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-value">{{ stat.value }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Sections -->
+    <div class="main-sections">
+      <!-- Fleet Status Map -->
+      <div class="card">
+        <div class="card-header">
+          <h2>{{ t('ESTADO_FLOTA') }}</h2>
+          <button class="btn-text">Ver Todo</button>
+        </div>
+        <div class="fleet-mini-map">
+          <div id="mini-map" class="map-overlay"></div>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card">
+        <div class="card-header">
+          <h2>{{ t('ACTIVIDAD_RECIENTE') }}</h2>
+          <button class="btn-text">Historial</button>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item" *ngFor="let item of recentActivity">
+            <div class="activity-marker" [ngClass]="item.type">
+              <ion-icon [name]="item.type === 'movement' ? 'car-outline' : item.type === 'alert' ? 'warning-outline' : 'pin-outline'"></ion-icon>
+            </div>
+            <div class="activity-content">
+              <div class="activity-top">
+                <span class="vehicle">{{ item.vehicle }}</span>
+                <span class="time">{{ item.time }}</span>
+              </div>
+              <p class="activity-desc">{{ item.status }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,133 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="telemetry-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ t('TELEMETRY_TITLE') }}</ion-title>
+    <ion-buttons slot="end">
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        <span>LIVE</span>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="telemetry-wrapper">
+    <div class="grid-background"></div>
+
+    <!-- Vehicle info -->
+    <div class="vehicle-mini-card">
+      <ion-icon name="car-sport-outline" class="vehicle-icon"></ion-icon>
+      <div class="vehicle-info">
+        <span class="vehicle-name">{{ vehicle.name }}</span>
+        <span class="vehicle-plate">{{ vehicle.plate }}</span>
+      </div>
+    </div>
+
+    <!-- Speed Gauge -->
+    <div class="gauge-card">
+      <div class="gauge-header">
+        <ion-icon name="speedometer-outline"></ion-icon>
+        <span>{{ t('SPEED') }}</span>
+      </div>
+      <div class="gauge-value">{{ speed.current }}<span class="gauge-unit">{{ speed.unit }}</span></div>
+      <div class="gauge-bar">
+        <div class="gauge-fill" [style.width.%]="(speed.current / speed.max) * 100"></div>
+      </div>
+      <div class="gauge-stats">
+        <div class="gauge-stat">
+          <span class="stat-label">{{ t('AVERAGE') }}</span>
+          <span class="stat-value">{{ speed.average }} {{ speed.unit }}</span>
+        </div>
+        <div class="gauge-stat">
+          <span class="stat-label">{{ t('MAXIMUM') }}</span>
+          <span class="stat-value">{{ speed.max }} {{ speed.unit }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Odometer & Acceleration -->
+    <div class="info-grid">
+      <div class="info-card odometer">
+        <div class="card-icon"><ion-icon name="map-outline"></ion-icon></div>
+        <div class="card-value">{{ odometer.total.toLocaleString() }} <span class="card-unit">{{ odometer.unit }}</span></div>
+        <div class="card-label">{{ t('ODOMETER') }}</div>
+      </div>
+      <div class="info-card acceleration">
+        <div class="card-icon"><ion-icon name="rocket-outline"></ion-icon></div>
+        <div class="card-value">{{ acceleration.current }}<span class="card-unit">{{ acceleration.unit }}</span></div>
+        <div class="card-label">{{ t('ACCELERATION') }}</div>
+      </div>
+    </div>
+
+    <!-- Acceleration detail -->
+    <div class="gauge-card">
+      <div class="gauge-header">
+        <ion-icon name="flash-outline"></ion-icon>
+        <span>{{ t('ACCELERATION_DETAIL') }}</span>
+      </div>
+      <div class="gauge-bar">
+        <div class="gauge-fill acceleration-fill" [style.width.%]="(acceleration.current / acceleration.max) * 100"></div>
+      </div>
+      <div class="gauge-stats">
+        <div class="gauge-stat">
+          <span class="stat-label">{{ t('AVERAGE') }}</span>
+          <span class="stat-value">{{ acceleration.average }} {{ acceleration.unit }}</span>
+        </div>
+        <div class="gauge-stat">
+          <span class="stat-label">{{ t('MAXIMUM') }}</span>
+          <span class="stat-value">{{ acceleration.max }} {{ acceleration.unit }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gyroscope -->
+    <div class="gyro-card">
+      <div class="gyro-header">
+        <ion-icon name="phone-portrait-outline"></ion-icon>
+        <span>{{ t('GYROSCOPE') }}</span>
+      </div>
+      <div class="gyro-grid">
+        <div class="gyro-axis">
+          <div class="axis-bar">
+            <div class="axis-fill pitch" [style.width.%]="(gyroscope.pitch / 90) * 100"></div>
+          </div>
+          <div class="axis-label">{{ gyroscope.pitch }}° {{ gyroscope.pitchLabel }}</div>
+        </div>
+        <div class="gyro-axis">
+          <div class="axis-bar">
+            <div class="axis-fill roll" [style.width.%]="(gyroscope.roll / 90) * 100"></div>
+          </div>
+          <div class="axis-label">{{ gyroscope.roll }}° {{ gyroscope.rollLabel }}</div>
+        </div>
+        <div class="gyro-axis">
+          <div class="axis-bar">
+            <div class="axis-fill yaw" [style.width.%]="(gyroscope.yaw / 360) * 100"></div>
+          </div>
+          <div class="axis-label">{{ gyroscope.yaw }}° {{ gyroscope.yawLabel }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Telemetry History -->
+    <div class="history-section">
+      <h3 class="section-title">{{ t('TELEMETRY_HISTORY') }}</h3>
+      <div class="history-table">
+        <div class="history-row header-row">
+          <span>{{ t('TIME') }}</span>
+          <span>{{ t('SPEED') }}</span>
+          <span>{{ t('ACCELERATION') }}</span>
+        </div>
+        <div class="history-row" *ngFor="let entry of telemetryHistory">
+          <span class="cell-time">{{ entry.time }}</span>
+          <span class="cell-speed">{{ entry.speed }}</span>
+          <span class="cell-acceleration">{{ entry.acceleration }}<span class="card-unit">G</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

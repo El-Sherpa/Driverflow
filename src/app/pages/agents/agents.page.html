@@ -1,0 +1,86 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="agents-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ t('AGENTES') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="agents-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="agents-card">
+      <div class="title-block">
+        <h1>{{ t('AGENTES_DE_LA_EMPRESA') }}</h1>
+        <p>{{ t('AQUI_PODRAS_VER_Y_GESTIONAR_LOS_AGENTES_ASOCIADOS_A_TU_EMPRESA') }}</p>
+      </div>
+
+      <div class="filters-row">
+        <div class="search-group">
+          <ion-icon name="search-outline"></ion-icon>
+          <input
+            type="text"
+            [placeholder]="t('BUSCAR_POR_NOMBRE_IDENTIFICACION_O_PLACA')"
+            [(ngModel)]="search"
+            (input)="onFiltersChange()"
+            class="search-input"
+          />
+        </div>
+      </div>
+
+      <div class="agent-list">
+        <div class="agent-card-item" *ngFor="let row of filteredRows">
+          <div class="agent-main-info">
+            <div class="agent-avatar">
+              <ion-icon name="person-circle-outline"></ion-icon>
+            </div>
+            <div class="agent-details">
+              <div class="name-status">
+                <span class="agent-name">{{ row.name }}</span>
+                <span class="status-pill" [ngClass]="row.status === 'Activo' ? 'status-ok' : 'status-bad'">
+                  {{ row.status }}
+                </span>
+              </div>
+              <div class="agent-id">{{ t('ID') }}: {{ row.identification }}</div>
+            </div>
+          </div>
+
+          <div class="agent-vehicle-info">
+            <div class="info-row">
+              <div class="info-item">
+                <span class="label">{{ t('PLACA') }}</span>
+                <span class="value plate-value">{{ row.plate }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">{{ t('CELULAR') }}</span>
+                <span class="value">{{ row.phone }}</span>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-item">
+                <span class="label">{{ t('SOAT') }}</span>
+                <span class="label">SOAT</span>
+                <span class="value muted">{{ row.soatDate }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Tecno</span>
+                <span class="value muted">{{ row.tecnoDate }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="agent-actions">
+            <button class="btn-action-outline">Ver Historial</button>
+            <button class="btn-action-primary">Asignar Tarea</button>
+          </div>
+        </div>
+
+        <div class="empty-state" *ngIf="filteredRows.length === 0">
+          No hay agentes registrados que coincidan con la búsqueda.
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

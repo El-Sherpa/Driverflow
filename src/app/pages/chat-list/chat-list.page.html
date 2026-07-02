@@ -1,0 +1,46 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="chat-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ t('CHATS') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="chat-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="empty-state" *ngIf="chats.length === 0">
+      <div class="empty-icon">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </div>
+      <h2 class="empty-title">{{ t('NO_HAZ_INICIADO_CHATS') }}</h2>
+      <p class="empty-subtitle">{{ userRole === 'admin' ? t('ADMIN_CHAT_EMPTY') : t('INICIA_UNA_CONVERSACION') }}</p>
+      <ion-button class="start-chat-btn" *ngIf="userRole === 'empresa' || userRole === 'cliente'" (click)="startChatWithAdmin()">
+        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+        {{ t('INICIAR_CHAT_CON_ADMINISTRADOR') }}
+      </ion-button>
+    </div>
+
+    <div class="chats-container" *ngIf="chats.length > 0">
+      <ion-list class="chats-list">
+        <ion-item class="chat-item" *ngFor="let chat of chats" (click)="openChat(chat)" button>
+          <div class="chat-avatar" slot="start">
+            <ion-icon name="person-circle"></ion-icon>
+          </div>
+          <div class="chat-info">
+            <h3 class="chat-name">{{ chat.name }}</h3>
+            <p class="chat-last-message">{{ chat.lastMessage }}</p>
+          </div>
+          <div class="chat-meta" slot="end">
+            <span class="chat-time">{{ chat.lastTime }}</span>
+            <div class="unread-badge" *ngIf="chat.unread > 0">
+              {{ chat.unread }}
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

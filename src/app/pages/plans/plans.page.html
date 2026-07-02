@@ -1,0 +1,68 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="plans-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ t('PAGOS_PLANES') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="plans-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="plans-container">
+      <div class="header-section">
+        <h1 class="page-title">{{ t('PAGOS_PLANES') }}</h1>
+        <p class="subtitle">{{ t('SELECCIONA_EL_PLAN_QUE_MEJOR_SE_AJUSTE_A_TU_EMPRESA_Y_PROCEDE_AL_PAGO') }}</p>
+        
+        <div class="selectors-row">
+          <div class="selector-group">
+            <label>{{ t('CICLO') }}:</label>
+            <div class="select-wrapper">
+              <ion-select [(ngModel)]="cycle" interface="popover" (ionChange)="onFiltersChange()" class="cyber-select">
+                <ion-select-option value="monthly">{{ t('MENSUAL') }}</ion-select-option>
+                <ion-select-option value="annual">{{ t('ANUAL') }}</ion-select-option>
+              </ion-select>
+            </div>
+          </div>
+          
+          <div class="selector-group">
+            <label>{{ t('MONEDA') }}:</label>
+            <div class="select-wrapper">
+              <ion-select [(ngModel)]="currency" interface="popover" (ionChange)="onFiltersChange()">
+                <ion-select-option value="COP">COP</ion-select-option>
+                <ion-select-option value="USD">USD</ion-select-option>
+              </ion-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="plans-grid">
+        <div class="plan-card" *ngFor="let plan of plans">
+          <div class="plan-header">
+            <h2 class="plan-name">{{ plan.name }}</h2>
+            <div class="plan-price">
+              {{ currency === 'COP' ? 'COP' : '$' }}{{ plan.price.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) }}
+              <span class="price-suffix">/{{ cycle === 'monthly' ? t('MENSUAL').toLowerCase() : t('ANUAL').toLowerCase() }}</span>
+            </div>
+          </div>
+          
+          <p class="plan-description">{{ plan.description }}</p>
+          
+          <ul class="plan-features">
+            <li *ngFor="let feature of plan.features">
+              <ion-icon name="checkmark-circle" class="feature-icon"></ion-icon>
+              {{ feature }}
+            </li>
+          </ul>
+          
+          <button class="btn-select" (click)="onSelectPlan(plan)">
+            Seleccionar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

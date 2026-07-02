@@ -1,0 +1,65 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="company-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Código Empresa</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="company-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="header-row">
+      <h1 class="page-title">Panel de Empresa</h1>
+
+      <div class="empresa-controls">
+        <div class="empresa-field">
+          <label>Empresa ID</label>
+          <input type="number" [(ngModel)]="empresaId" />
+        </div>
+        <button class="btn-outline" (click)="refresh()">Actualizar</button>
+      </div>
+    </div>
+
+    <div class="main-card">
+      <div class="card-title">Código de invitación para registro</div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-label">Código actual</div>
+          <div class="code-badge-container">
+            <div class="code-badge-dark">{{ code || '—' }}</div>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Expira en</div>
+          <div class="stat-value-large">{{ expiryLabel }}</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Estado</div>
+          <div class="status-pill-modern" [ngClass]="status === 'Vigente' ? 'status-ok' : 'status-bad'">
+            {{ status }}
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="actions-row">
+        <div class="days-field">
+          <label>Expira en (días)</label>
+          <input type="number" [(ngModel)]="expiresInDays" class="dark-input" />
+        </div>
+
+        <div class="buttons">
+          <button class="btn-primary-action" (click)="rotateCode()">Generar / Rotar código</button>
+          <button class="btn-outline-danger" (click)="revoke()">Revocar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

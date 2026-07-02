@@ -1,0 +1,7 @@
+{
+  "name": "driveflow-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

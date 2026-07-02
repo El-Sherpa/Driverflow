@@ -1,0 +1,112 @@
+<ion-content [fullscreen]="true">
+  <div class="register-wrapper">
+    <div class="grid-background"></div>
+    
+    <div class="header-section">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/login" text="" color="light"></ion-back-button>
+      </ion-buttons>
+      <div class="progress-container">
+        <div class="progress-bar" [class.active]="step >= 1"></div>
+        <div class="progress-bar" [class.active]="step >= 2"></div>
+      </div>
+    </div>
+
+    <form [formGroup]="registerForm" class="register-form">
+      <!-- Paso 1: Datos Personales -->
+      <div *ngIf="step === 1" class="step-container anim-fade">
+        <h1 class="step-title">Datos Personales</h1>
+        <p class="step-subtitle">Paso 1 de 2: Cuéntanos sobre ti</p>
+
+        <div class="input-group">
+          <div class="input-icon-wrapper">
+            <div class="circle-icon"></div>
+            <ion-item lines="none" class="minimal-input">
+              <ion-input formControlName="nombres" placeholder="Nombres"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-icon-wrapper">
+            <div class="circle-icon"></div>
+            <ion-item lines="none" class="minimal-input">
+              <ion-input formControlName="apellidos" placeholder="Apellidos"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-icon-wrapper">
+            <div class="circle-icon"></div>
+            <ion-item lines="none" class="minimal-input">
+              <ion-input formControlName="email" type="email" placeholder="Correo Electrónico"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <ion-button expand="block" (click)="nextStep()" class="action-btn-next">
+          SIGUIENTE →
+        </ion-button>
+      </div>
+
+      <!-- Paso 2: Seguridad y Rol -->
+      <div *ngIf="step === 2" class="step-container anim-fade">
+        <h1 class="step-title">Seguridad</h1>
+        <p class="step-subtitle">Paso 2 de 2: Elige tu rol</p>
+
+        <ion-list class="role-selector ion-margin-bottom">
+          <ion-radio-group formControlName="tipo_usuario">
+            <ion-item lines="none" class="role-item">
+              <ion-label>Cliente / Conductor</ion-label>
+              <ion-radio slot="end" value="cliente"></ion-radio>
+            </ion-item>
+            <ion-item lines="none" class="role-item">
+              <ion-label>Empresa</ion-label>
+              <ion-radio slot="end" value="empresa"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+
+        <div class="input-group">
+          <div class="input-icon-wrapper">
+            <div class="circle-icon"></div>
+            <ion-item lines="none" class="minimal-input">
+              <ion-input formControlName="password" type="password" placeholder="Contraseña"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-icon-wrapper">
+            <div class="circle-icon"></div>
+            <ion-item lines="none" class="minimal-input">
+              <ion-input formControlName="confirmPassword" type="password" placeholder="Confirmar Contraseña"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <ion-button fill="clear" (click)="prevStep()" class="back-btn">
+            Atrás
+          </ion-button>
+          <ion-button (click)="onRegister()" class="action-btn-next" [disabled]="!registerForm.valid">
+            REGISTRARME
+          </ion-button>
+        </div>
+      </div>
+    </form>
+
+    <div class="social-login">
+      <p>O regístrate con</p>
+      <div class="social-icons">
+        <div class="social-circle">
+          <ion-icon name="logo-google"></ion-icon>
+        </div>
+        <div class="social-circle">
+          <ion-icon name="logo-facebook"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,216 @@
+.devices-toolbar {
+  --background: #0f172a;
+  --color: #e5e7eb;
+}
+
+.devices-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  background: #0f172a;
+  padding: 20px;
+  overflow: hidden;
+
+  .grid-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 1;
+  }
+}
+
+.devices-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(30, 41, 59, 0.55);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 30px;
+
+  .page-title {
+    color: #ef4444; // Matching the red color from the reference image
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+  }
+}
+
+.search-section {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
+
+  .search-input-wrapper {
+    flex: 1;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2px 15px;
+    display: flex;
+    align-items: center;
+
+    .search-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      padding: 10px 0;
+      outline: none;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+    }
+  }
+
+  .btn-search {
+    background: #ef4444; // Matching the button color from reference
+    color: white;
+    border: none;
+    padding: 0 25px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.status-section {
+  margin-bottom: 30px;
+
+  .section-title {
+    color: #ef4444; // Matching the red color from the reference image
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .empty-state {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.95rem;
+    padding: 15px;
+    background: rgba(15, 23, 42, 0.4);
+    border-radius: 12px;
+    text-align: center;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+  }
+
+  .device-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .device-item {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(15, 23, 42, 0.8);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .device-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      .device-icon {
+        font-size: 1.4rem;
+        color: #94a3b8;
+      }
+
+      .device-plate {
+        color: white;
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+      }
+    }
+
+    .device-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+      }
+
+      &.active {
+        color: #22c55e;
+        background: rgba(34, 197, 94, 0.1);
+        .status-dot {
+          background: #22c55e;
+          box-shadow: 0 0 8px #22c55e;
+        }
+      }
+
+      &.inactive {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+        .status-dot {
+          background: #ef4444;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .devices-card {
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+  .search-section {
+    flex-direction: column;
+    
+    .btn-search {
+      padding: 12px;
+    }
+  }
+
+  .header-section .page-title {
+    font-size: 1.5rem;
+  }
+}

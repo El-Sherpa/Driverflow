@@ -1,0 +1,102 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+// Estilos para el Alert 'Cyber' Global
+.cyber-alert {
+  --background: rgba(15, 23, 42, 0.95);
+  --backdrop-filter: blur(10px);
+  
+  .alert-wrapper {
+    background: rgba(15, 23, 42, 0.9) !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(59, 130, 246, 0.2) !important;
+  }
+
+  .alert-head {
+    padding-bottom: 15px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    
+    .alert-title {
+      color: #3b82f6 !important;
+      font-weight: 900 !important;
+      font-size: 1.3rem !important;
+      letter-spacing: 1px !important;
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.5) !important;
+    }
+
+    .alert-sub-title {
+      color: white !important;
+      font-weight: 700 !important;
+      font-size: 1rem !important;
+      margin-top: 5px !important;
+      opacity: 0.9 !important;
+    }
+  }
+
+  .alert-message {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+    padding-top: 20px !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  }
+
+  .alert-button-group {
+    padding: 10px 15px 20px !important;
+    
+    .cyber-button {
+      background: rgba(59, 130, 246, 0.1) !important;
+      border: 1px solid rgba(59, 130, 246, 0.3) !important;
+      border-radius: 10px !important;
+      color: #3b82f6 !important;
+      font-weight: 800 !important;
+      letter-spacing: 1px !important;
+      width: 100% !important;
+      margin: 0 !important;
+      
+      .button-native {
+        color: #3b82f6 !important;
+      }
+
+      &.ion-activated {
+        background: rgba(59, 130, 246, 0.2) !important;
+      }
+    }
+  }
+}

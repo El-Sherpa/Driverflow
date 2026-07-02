@@ -1,0 +1,98 @@
+<ion-content [fullscreen]="true" class="gps-content">
+  <div class="map-wrapper">
+    <!-- Map Container Real (MapLibre) -->
+    <div #mapContainer class="real-map" [class.gps-off]="!gpsEnabled"></div>
+
+    <!-- Elementos ocultos para usarlos como marcadores en el mapa real -->
+    <div style="display: none;">
+      <div #markerVehicle class="marker-container">
+        <div class="marker-pulse"></div>
+        <div class="marker-core">
+          <ion-icon name="car-sport"></ion-icon>
+        </div>
+        <div class="marker-label">{{ t('MI_VEHICULO') }}</div>
+      </div>
+
+      <div #markerDestination class="marker-container destination">
+        <div class="marker-pulse dest"></div>
+        <div class="marker-core dest">
+          <ion-icon name="location"></ion-icon>
+        </div>
+        <div class="marker-label">{{ t('OFICINA_CENTRAL') }}</div>
+      </div>
+    </div>
+    
+    <!-- Overlay de Rejilla Tecnológica (opcional, para estilo DriveFlow) -->
+    <div class="tech-grid-overlay" *ngIf="gpsEnabled"></div>
+
+    <!-- Overlay de GPS Desactivado -->
+    <div class="gps-disabled-overlay" *ngIf="!gpsEnabled">
+      <div class="status-content-compact">
+        <div class="glitch-wrapper">
+          <ion-icon name="notifications-off-outline" class="off-icon-small neon-pulse-red"></ion-icon>
+        </div>
+        <div class="text-group">
+          <h2 class="status-title glitch" [attr.data-text]="t('GPS_DESACTIVADO')">{{ t('GPS_DESACTIVADO') }}</h2>
+          <p class="status-subtitle">{{ t('PULSA_ENCENDER_PARA_RASTREAR_UBICACION') }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-status-bar" *ngIf="gpsEnabled">
+      <div class="gps-online-badge">
+        <div class="online-dot"></div>
+        <span class="glitch-blue" data-text="GPS ONLINE">GPS ONLINE</span>
+      </div>
+    </div>
+    
+    <!-- Panel Inferior (Detalles de Ruta) -->
+    <div class="route-details-panel" *ngIf="routeVisible && (routeInfo || isRouteLoading)">
+      <div class="route-card">
+        <div class="route-info" *ngIf="!isRouteLoading && routeInfo">
+          <div class="dest-label">{{ t('GPS_DESTINATION') }}: Oficina Central</div>
+          <div class="time-dist">
+            <span class="eta">ETA: {{ routeInfo.duration }}</span>
+            <span class="dot">•</span>
+            <span class="dist">{{ routeInfo.distance }}</span>
+          </div>
+        </div>
+        
+        <div class="loading-route" *ngIf="isRouteLoading">
+          <ion-spinner name="crescent"></ion-spinner>
+          <span>{{ t('GPS_CALCULATING_ROUTE') }}...</span>
+        </div>
+
+        <ion-button expand="block" fill="solid" class="clear-btn" (click)="traceRoute()">
+          {{ t('GPS_CLEAR_ROUTE') }}
+        </ion-button>
+      </div>
+    </div>
+
+    <div class="controls-overlay">
+      <div class="search-bar">
+        <ion-icon name="search-outline"></ion-icon>
+        <input type="text" [placeholder]="t('GPS_SEARCH_PLACEHOLDER')" />
+      </div>
+
+      <div class="power-buttons">
+        <button class="btn-power off" [class.active]="!gpsEnabled" (click)="togglePower(false)">
+          {{ t('GPS_OFF') }}
+        </button>
+        <button class="btn-power on" [class.active]="gpsEnabled" (click)="togglePower(true)">
+          {{ t('GPS_ON') }}
+        </button>
+      </div>
+    </div>
+
+    <div class="fab-container" *ngIf="gpsEnabled">
+      <button class="fab-btn"><ion-icon name="locate-outline"></ion-icon></button>
+      <button class="fab-btn"><ion-icon name="layers-outline"></ion-icon></button>
+      <button class="fab-btn"><ion-icon name="add-outline"></ion-icon></button>
+      <button class="fab-btn" (click)="traceRoute()" [class.active]="routeVisible">
+        <ion-icon name="grid-outline"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Back Button Removed to avoid overlap with search bar -->
+  </div>
+</ion-content>

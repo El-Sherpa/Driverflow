@@ -1,0 +1,100 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="assign-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Asignar Vehículo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="assign-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="assign-container">
+      <h1 class="page-title">Asignar vehículo a usuario registrado</h1>
+
+      <div class="panels-grid">
+        <!-- Panel Izquierdo: Usuario -->
+        <div class="panel user-panel">
+          <h2 class="panel-header">Usuario</h2>
+          <div class="panel-content">
+            <div class="form-group">
+              <label>Seleccionar usuario</label>
+              <div class="select-wrapper">
+                <ion-select [(ngModel)]="assignment.userId" name="userId" placeholder="-- Selecciona un usuario --" interface="popover">
+                  <ion-select-option *ngFor="let u of users" [value]="u.id">{{ u.name }}</ion-select-option>
+                </ion-select>
+              </div>
+            </div>
+            <div class="info-box warning" *ngIf="users.length === 0">
+              No hay usuarios disponibles para esta empresa.
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel Derecho: Datos del vehículo -->
+        <div class="panel vehicle-panel">
+          <h2 class="panel-header">Datos del vehículo</h2>
+          <div class="panel-content">
+            <div class="form-group">
+              <label>Seleccionar de mis vehículos</label>
+              <div class="select-wrapper">
+                <ion-select [(ngModel)]="assignment.vehicleId" name="vehicleId" placeholder="-- Selecciona un vehículo --" interface="popover">
+                  <ion-select-option *ngFor="let v of vehicles" [value]="v.id">{{ v.plate }}</ion-select-option>
+                </ion-select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Marca</label>
+              <input type="text" [(ngModel)]="assignment.marca" name="marca" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>Modelo</label>
+              <input type="text" [(ngModel)]="assignment.modelo" name="modelo" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>Año</label>
+              <input type="text" [(ngModel)]="assignment.anio" name="anio" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>Placa</label>
+              <input type="text" [(ngModel)]="assignment.placa" name="placa" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>Fecha SOAT</label>
+              <input type="date" [(ngModel)]="assignment.fechaSoat" name="fechaSoat" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>Fecha Tecnomecánica</label>
+              <input type="date" [(ngModel)]="assignment.fechaTecno" name="fechaTecno" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>Color</label>
+              <input type="text" [(ngModel)]="assignment.color" name="color" class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label>URL Imagen</label>
+              <input type="text" [(ngModel)]="assignment.urlImagen" name="urlImagen" class="form-input" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions-footer">
+        <button class="btn-assign" (click)="onAssign()" [disabled]="isAssigning">
+          <ion-spinner name="crescent" *ngIf="isAssigning"></ion-spinner>
+          <span *ngIf="!isAssigning">Asignar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>

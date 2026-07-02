@@ -1,0 +1,96 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="client-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>DriveFlow</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="dashboard-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="profile-section">
+      <div class="avatar-container">
+        <ion-avatar>
+          <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <div class="edit-badge">
+          <ion-icon name="camera"></ion-icon>
+        </div>
+      </div>
+      <div class="profile-info">
+        <h2>{{ userProfile.name }}</h2>
+        <p>{{ userProfile.email }}</p>
+        <div class="member-badge">
+          <span>Miembro desde {{ userProfile.memberSince }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <button class="btn-assistance" (click)="requestAssistance()">
+        <div class="btn-content">
+          <ion-icon name="help-buoy-outline"></ion-icon>
+          <span>SOLICITAR ASISTENCIA</span>
+        </div>
+        <div class="btn-glow"></div>
+      </button>
+    </div>
+
+    <div class="section-container">
+      <div class="section-header">
+        <h3>Mis Vehículos</h3>
+        <button class="btn-add">
+          <ion-icon name="add-circle-outline"></ion-icon>
+          AÑADIR
+        </button>
+      </div>
+
+      <div class="vehicle-grid">
+        <div class="vehicle-tech-card" *ngFor="let vehicle of myVehicles" (click)="viewVehicleDetails(vehicle)">
+          <div class="card-body">
+            <div class="vehicle-icon">
+              <ion-icon name="car-sport"></ion-icon>
+            </div>
+            <div class="vehicle-info">
+              <div class="plate-status">
+                <span class="plate">{{ vehicle.plate }}</span>
+                <span class="status-pill" [ngClass]="vehicle.status === 'Al día' ? 'status-ok' : 'status-alert'">
+                  {{ vehicle.status }}
+                </span>
+              </div>
+              <p class="model">{{ vehicle.model }}</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="service-info">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>Próximo servicio: <strong>{{ vehicle.nextService }}</strong></span>
+            </div>
+            <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="promo-banner">
+      <div class="promo-content">
+        <div class="text-group">
+          <span class="promo-tag">¡Descuento VIP!</span>
+          <h3>10% OFF en cambio de aceite</h3>
+        </div>
+        <div class="promo-icon">
+          <ion-icon name="gift"></ion-icon>
+        </div>
+      </div>
+      <div class="promo-glow"></div>
+    </div>
+  </div>
+</ion-content>

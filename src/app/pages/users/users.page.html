@@ -1,0 +1,121 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="users-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ t('USUARIOS') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="users-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="users-card">
+      <div class="filters-row">
+        <div class="filter-group">
+          <label>{{ t('FILTRAR_ROL') }}:</label>
+          <ion-select interface="popover" [(ngModel)]="roleFilter" (ionChange)="onFiltersChange()" class="select-compact">
+            <ion-select-option value="Todos">Todos</ion-select-option>
+            <ion-select-option value="administrador">administrador</ion-select-option>
+            <ion-select-option value="empresa">empresa</ion-select-option>
+            <ion-select-option value="cliente">cliente</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div class="search-group">
+          <ion-icon name="search-outline"></ion-icon>
+          <input
+            type="text"
+            [placeholder]="t('BUSCAR_USUARIO')"
+            [(ngModel)]="search"
+            (input)="onFiltersChange()"
+          />
+        </div>
+
+        <div class="pagination-header">
+          <div class="page-size-selector">
+            <ion-select interface="popover" [(ngModel)]="pageSize" (ionChange)="onFiltersChange()" class="select-mini">
+              <ion-select-option [value]="10">10/pág</ion-select-option>
+              <ion-select-option [value]="20">20/pág</ion-select-option>
+              <ion-select-option [value]="50">50/pág</ion-select-option>
+            </ion-select>
+          </div>
+          <div class="pager-controls">
+            <button class="btn-pager" (click)="prev()" [disabled]="page === 1">
+              <ion-icon name="chevron-back-outline"></ion-icon>
+            </button>
+            <span class="page-indicator">{{ page }} / {{ totalPages }}</span>
+            <button class="btn-pager" (click)="next()" [disabled]="page === totalPages">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-list">
+        <div class="user-card-item" *ngFor="let row of pagedRows" (click)="viewUserDetails(row)">
+          <div class="user-main-info">
+            <div class="user-avatar" [ngClass]="'role-bg-' + row.role">
+              {{ row.name.charAt(0) }}
+            </div>
+            <div class="user-details">
+              <div class="name-role">
+                <span class="user-name">{{ row.name }}</span>
+                <span class="role-pill" [ngClass]="'role-' + row.role">
+                  {{ row.role }}
+                </span>
+              </div>
+              <div class="user-meta">
+                <span class="username">@{{ row.username }}</span>
+                <span class="separator">•</span>
+                <span class="email">{{ row.email }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="user-actions" (click)="$event.stopPropagation()">
+            <div class="block-control">
+              <span class="control-label">{{ t('ESTADO_ACCESO') }}</span>
+              <div class="toggle-wrapper">
+                <span class="status-text" [class.active]="!row.blocked">{{ t('ACTIVO') }}</span>
+                <ion-toggle
+                  [checked]="row.blocked"
+                  (ionChange)="toggleBlocked(row, $event.detail.checked)"
+                  color="danger">
+                </ion-toggle>
+                <span class="status-text" [class.blocked]="row.blocked">{{ t('BLOQUEADO') }}</span>
+              </div>
+            </div>
+            <div class="quick-btns">
+              <button class="btn-icon">
+                <ion-icon name="create-outline"></ion-icon>
+              </button>
+              <button class="btn-icon delete">
+                <ion-icon name="trash-outline"></ion-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="empty-state" *ngIf="filteredRows.length === 0">
+          No se encontraron usuarios con los filtros aplicados.
+        </div>
+      </div>
+
+      <div class="pagination-footer" *ngIf="filteredRows.length > 0">
+        <div class="page-info">
+          Página <strong>{{ page }}</strong> de {{ totalPages }}
+        </div>
+        <div class="pager-btns">
+          <button class="btn-nav" (click)="prev()" [disabled]="page === 1">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </button>
+          <button class="btn-nav" (click)="next()" [disabled]="page === totalPages">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

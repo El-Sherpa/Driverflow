@@ -1,0 +1,73 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="vehicle-toolbar">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" color="primary" class="back-btn">
+        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+        VOLVER
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="danger" class="close-btn">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="vehicle-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="main-card">
+      <div class="image-container">
+        <div class="placeholder-img">
+          <span>IMAGEN DEL VEHÍCULO</span>
+        </div>
+      </div>
+      <h1 class="vehicle-name">{{ vehicle.name }}</h1>
+      <div class="plate-badge">{{ vehicle.plate }}</div>
+    </div>
+
+    <div class="specs-grid">
+      <div class="spec-item">
+        <span class="spec-value">{{ vehicle.brand }}</span>
+        <span class="spec-label">MARCA</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-value">{{ vehicle.model }}</span>
+        <span class="spec-label">MODELO</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-value">{{ vehicle.color }}</span>
+        <span class="spec-label">COLOR</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-value">{{ vehicle.year }}</span>
+        <span class="spec-label">AÑO</span>
+      </div>
+    </div>
+
+    <div class="docs-section">
+      <h3 class="section-title">DOCUMENTACIÓN Y VENCIMIENTOS</h3>
+      
+      <div class="doc-card" *ngFor="let doc of docs">
+        <div class="doc-info">
+          <h4 class="doc-title">{{ doc.title }}</h4>
+          <p class="doc-expiry">Vence: {{ doc.expiry }}</p>
+        </div>
+        <div class="doc-status" [ngClass]="doc.statusClass">
+          {{ doc.status }}
+        </div>
+      </div>
+    </div>
+
+    <ion-button expand="block" class="action-btn telemetry-btn" (click)="goToTelemetry()">
+      <ion-icon slot="start" name="pulse-outline"></ion-icon>
+      {{ t('VIEW_TELEMETRY') }}
+    </ion-button>
+
+    <ion-button expand="block" class="action-btn" (click)="updateData()">
+      ACTUALIZAR DATOS
+    </ion-button>
+  </div>
+</ion-content>

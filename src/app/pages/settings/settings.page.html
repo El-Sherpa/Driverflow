@@ -1,0 +1,80 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="settings-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ t('AJUSTES') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="settings-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="settings-container">
+      <div class="settings-section">
+        <h3 class="section-title">{{ t('PREFERENCIAS') }}</h3>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <div class="text">
+              <span class="label">{{ t('NOTIFICACIONES') }}</span>
+              <span class="desc">{{ t('NOTIFICACIONES_DESC') }}</span>
+            </div>
+          </div>
+          <ion-toggle [(ngModel)]="settings.notifications" color="primary"></ion-toggle>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <ion-icon name="moon-outline"></ion-icon>
+            <div class="text">
+              <span class="label">{{ t('MODO_OSCURO') }}</span>
+              <span class="desc">{{ t('MODO_OSCURO_DESC') }}</span>
+            </div>
+          </div>
+          <ion-toggle [(ngModel)]="settings.darkMode" color="primary"></ion-toggle>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3 class="section-title">{{ t('SISTEMA') }}</h3>
+        
+        <div class="setting-item">
+          <div class="setting-info">
+            <ion-icon name="language-outline"></ion-icon>
+            <div class="text">
+              <span class="label">{{ t('IDIOMA') }}</span>
+            </div>
+          </div>
+          <ion-select interface="popover" [(ngModel)]="settings.language" (ionChange)="changeLanguage()" class="cyber-select">
+            <ion-select-option value="es">Español</ion-select-option>
+            <ion-select-option value="en">English</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <ion-icon name="timer-outline"></ion-icon>
+            <div class="text">
+              <span class="label">{{ t('FRECUENCIA_GPS') }}</span>
+              <span class="desc">{{ t('FRECUENCIA_GPS_DESC') }}</span>
+            </div>
+          </div>
+          <ion-select interface="popover" [(ngModel)]="settings.gpsFrequency" class="cyber-select">
+            <ion-select-option value="10">10s</ion-select-option>
+            <ion-select-option value="30">30s</ion-select-option>
+            <ion-select-option value="60">60s</ion-select-option>
+          </ion-select>
+        </div>
+      </div>
+
+      <div class="settings-actions">
+        <button class="btn-save" (click)="saveSettings()">
+          {{ t('GUARDAR') }}
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>

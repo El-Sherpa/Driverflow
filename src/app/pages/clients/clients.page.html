@@ -1,0 +1,110 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="clients-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ t('CLIENTES') }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="clients-wrapper">
+    <div class="grid-background"></div>
+
+    <div class="clients-card">
+      <div class="title-block">
+        <h1>{{ t('CLIENTES_DE_LA_EMPRESA') }}</h1>
+        <p>{{ t('AQUI_PODRAS_VER_Y_GESTIONAR_LOS_CLIENTES_ASOCIADOS_A_TU_EMPRESA') }}</p>
+      </div>
+
+      <div class="filters-row">
+        <div class="left-controls">
+          <label class="small-label">{{ t('MOSTRAR') }}:</label>
+          <ion-select interface="popover" [(ngModel)]="showMode" (ionChange)="onFiltersChange()" class="select-compact">
+            <ion-select-option value="Clientes">{{ t('CLIENTES') }}</ion-select-option>
+            <ion-select-option value="Funcionarios">{{ t('FUNCIONARIOS') }}</ion-select-option>
+            <ion-select-option value="PIME">{{ t('PIME') }}</ion-select-option>
+            <ion-select-option value="Todos">{{ t('TODOS') }}</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div class="search-group">
+          <ion-icon name="search-outline"></ion-icon>
+          <input
+            type="text"
+            [placeholder]="t('BUSCAR_POR_NOMBRE_IDENTIFICACION_O_PLACA')"
+            [(ngModel)]="search"
+            (input)="onFiltersChange()"
+            class="search-input"
+          />
+        </div>
+
+        <div class="total-badge">
+          <span>{{ t('TOTAL') }}:</span>
+          <strong>{{ total }}</strong>
+        </div>
+      </div>
+
+      <div class="client-list">
+        <div class="client-card-item" *ngFor="let row of filteredRows">
+          <div class="client-main-info">
+            <div class="client-avatar">
+              <ion-icon [name]="row.name.includes('S.A.S') ? 'business-outline' : 'person-circle-outline'"></ion-icon>
+            </div>
+            <div class="client-details">
+              <div class="name-status">
+                <span class="client-name">{{ row.name }}</span>
+                <span class="status-pill" [ngClass]="row.status === 'Activo' ? 'status-ok' : 'status-bad'">
+                  {{ row.status }}
+                </span>
+              </div>
+              <div class="client-id">{{ t('ID') }}: {{ row.identification }}</div>
+            </div>
+          </div>
+
+          <div class="client-vehicle-info">
+            <div class="info-row">
+              <div class="info-item">
+                <span class="label">Placa</span>
+                <span class="value plate-value">{{ row.plate }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Celular</span>
+                <span class="value">{{ row.phone }}</span>
+              </div>
+            </div>
+            <div class="info-row">
+              <div class="info-item">
+                <span class="label">SOAT</span>
+                <span class="value muted">{{ row.soatDate }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Tecno</span>
+                <span class="value muted">{{ row.tecnoDate }}</span>
+              </div>
+            </div>
+            <div class="info-row footer-row">
+              <div class="info-item">
+                <span class="label">Origen</span>
+                <span class="origin-pill">{{ row.origin }}</span>
+              </div>
+              <div class="info-item">
+                <span class="label">Modelo</span>
+                <span class="value">{{ row.model }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="client-actions">
+            <button class="btn-action-outline">Expediente</button>
+            <button class="btn-action-primary">Ver en Mapa</button>
+          </div>
+        </div>
+
+        <div class="empty-state" *ngIf="filteredRows.length === 0">
+          No hay clientes registrados que coincidan con la búsqueda.
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

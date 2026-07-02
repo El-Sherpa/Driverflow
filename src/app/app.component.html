@@ -1,0 +1,122 @@
+<ion-app>
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content class="menu-content">
+      <div class="menu-header">
+        <ion-img src="assets/images/logo2.png" class="menu-logo"></ion-img>
+        <h1 class="menu-brand">DriveFlow</h1>
+      </div>
+
+      <ion-list lines="none" class="menu-list" *ngIf="(userRole$ | async) as role">
+        <ion-menu-toggle auto-hide="false">
+          
+          <!-- SECCIÓN CLIENTE -->
+          <ng-container *ngIf="role === 'cliente'">
+            <ion-item button class="menu-item" routerLink="/profile" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="person-outline"></ion-icon>
+              <ion-label>{{ t('MI_PERFIL') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/vehicle" routerLinkActive="active-item">
+              <ion-icon slot="start" name="car-outline"></ion-icon>
+              <ion-label>{{ t('MI_VEHICULO') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/gps" routerLinkActive="active-item">
+              <ion-icon slot="start" name="locate-outline"></ion-icon>
+              <ion-label>{{ t('GPS') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/chat-list" routerLinkActive="active-item">
+              <ion-icon slot="start" name="chatbubbles-outline"></ion-icon>
+              <ion-label>{{ t('CHATS') }}</ion-label>
+            </ion-item>
+          </ng-container>
+
+          <!-- SECCIÓN EMPRESA / ADMIN -->
+          <ng-container *ngIf="role === 'empresa' || role === 'admin'">
+            <!-- Dashboard Empresa (Solo Empresa) -->
+            <ion-item button class="menu-item" routerLink="/empresa-dashboard" *ngIf="role === 'empresa'" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="grid-outline"></ion-icon>
+              <ion-label>{{ t('DASHBOARD') }}</ion-label>
+            </ion-item>
+
+            <!-- Dashboard Admin (Solo Admin) -->
+            <ion-item button class="menu-item" routerLink="/admin-dashboard" *ngIf="role === 'admin'" routerLinkActive="active-item">
+              <ion-icon slot="start" name="shield-checkmark-outline"></ion-icon>
+              <ion-label>{{ t('ADMIN_PANEL') }}</ion-label>
+            </ion-item>
+
+            <!-- Mi Vehículo (Empresa) -->
+            <ion-item button class="menu-item" routerLink="/vehicle" *ngIf="role === 'empresa'" routerLinkActive="active-item">
+              <ion-icon slot="start" name="car-outline"></ion-icon>
+              <ion-label>{{ t('MI_VEHICULO') }}</ion-label>
+            </ion-item>
+
+            <!-- GPS (Empresa / Admin) -->
+            <ion-item button class="menu-item" routerLink="/gps" routerLinkActive="active-item">
+              <ion-icon slot="start" name="locate-outline"></ion-icon>
+              <ion-label>{{ t('MAPA_GPS') }}</ion-label>
+            </ion-item>
+
+            <!-- Telemetry (Empresa / Admin) -->
+            <ion-item button class="menu-item" routerLink="/telemetry" routerLinkActive="active-item">
+              <ion-icon slot="start" name="pulse-outline"></ion-icon>
+              <ion-label>{{ t('TELEMETRY') }}</ion-label>
+            </ion-item>
+
+            <div class="menu-section-title">{{ t('GESTION') }}</div>
+
+            <ion-item button class="menu-item" routerLink="/users" *ngIf="role === 'admin'" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="people-outline"></ion-icon>
+              <ion-label>{{ t('USUARIOS') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/company-code" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="business-outline"></ion-icon>
+              <ion-label>{{ t('CODIGO_EMPRESA') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/clients" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="people-circle-outline"></ion-icon>
+              <ion-label>{{ t('CLIENTES') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/agents" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="headset-outline"></ion-icon>
+              <ion-label>{{ t('AGENTES') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/devices" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="desktop-outline"></ion-icon>
+              <ion-label>{{ t('DISPOSITIVOS') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/assign-vehicle" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+              <ion-label>{{ t('ASIGNAR_VEHICULO') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/plans" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="card-outline"></ion-icon>
+              <ion-label>{{ t('PAGOS_PLANES') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/settings" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="settings-outline"></ion-icon>
+              <ion-label>{{ t('AJUSTES') }}</ion-label>
+            </ion-item>
+
+            <ion-item button class="menu-item" routerLink="/chat-list" routerLinkActive="active-item" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon slot="start" name="chatbubbles-outline"></ion-icon>
+              <ion-label>{{ t('CHATS') }}</ion-label>
+            </ion-item>
+          </ng-container>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="main-content">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
+</ion-app>

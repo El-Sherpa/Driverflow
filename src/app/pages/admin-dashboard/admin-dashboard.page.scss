@@ -1,0 +1,211 @@
+.admin-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  background: #0f172a;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.grid-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 30px 30px;
+  z-index: 1;
+}
+
+.admin-toolbar {
+  --background: #0f172a;
+  --color: #64748b;
+  --border-width: 0;
+  
+  ion-title {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    font-weight: 400;
+  }
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  .indicator-dot {
+    width: 10px;
+    height: 10px;
+    background: #ef4444;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #ef4444;
+  }
+}
+
+.welcome-section {
+  position: relative;
+  z-index: 2;
+  margin: 10px 0 30px;
+  
+  h1 {
+    color: white;
+    font-size: 2.2rem;
+    font-weight: 400;
+    margin: 0;
+  }
+}
+
+.chart-container {
+  position: relative;
+  z-index: 2;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(8px);
+
+  .chart-title {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    margin: 0 0 15px 0;
+  }
+}
+
+.stats-grid {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 35px;
+
+  .stat-card {
+    flex: 1;
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 25px 20px;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 20%;
+      bottom: 20%;
+      width: 4px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    &.blue::before { background: #3b82f6; box-shadow: 0 0 10px #3b82f6; }
+    &.green::before { background: #10b981; box-shadow: 0 0 10px #10b981; }
+
+    .stat-value {
+      color: white;
+      font-size: 2.4rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .stat-label {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+  }
+}
+
+.activity-section {
+  position: relative;
+  z-index: 2;
+  
+  .section-title {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+  }
+}
+
+.activity-list {
+  background: transparent;
+  padding: 0;
+}
+
+.activity-item {
+  --background: rgba(15, 23, 42, 0.6);
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+
+  .user-avatar {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    margin-right: 15px;
+  }
+
+  ion-label {
+    h2 {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    p {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.85rem;
+    }
+  }
+
+  ion-badge {
+    background: transparent;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: 0;
+
+    &.status-exitoso { color: #10b981; }
+    &.status-pendiente { color: #f59e0b; }
+  }
+}
+
+.custom-tab-bar {
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 10px 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px 24px 0 0;
+
+  .tab-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.95rem;
+
+    &.active {
+      color: #3b82f6;
+      .tab-dot {
+        width: 6px;
+        height: 6px;
+        background: #3b82f6;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #3b82f6;
+      }
+    }
+  }
+}
