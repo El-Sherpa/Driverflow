@@ -88,10 +88,10 @@
               </div>
             </div>
             <div class="quick-btns">
-              <button class="btn-icon">
+              <button class="btn-icon" (click)="editUser(row, $event)">
                 <ion-icon name="create-outline"></ion-icon>
               </button>
-              <button class="btn-icon delete">
+              <button class="btn-icon delete" (click)="deleteUser(row, $event)">
                 <ion-icon name="trash-outline"></ion-icon>
               </button>
             </div>

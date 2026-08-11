@@ -2,7 +2,6 @@ import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef } fr
 import { CommonModule } from '@angular/common';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { TranslationService } from '../../services/translation.service';
 import { FormsModule } from '@angular/forms';
 import * as maplibregl from 'maplibre-gl';
@@ -33,7 +32,6 @@ export class GpsPage implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private router: Router, 
-    private authService: AuthService, 
     private translationService: TranslationService,
     private toastController: ToastController
   ) { }
@@ -218,15 +216,6 @@ export class GpsPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goBack() {
-    const role = this.authService.currentUserValue?.role;
-    if (role === 'empresa') {
-      this.router.navigate(['/empresa-dashboard']);
-    } else if (role === 'cliente') {
-      this.router.navigate(['/cliente-dashboard']);
-    } else if (role === 'admin') {
-      this.router.navigate(['/admin-dashboard']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    window.history.back();
   }
 }

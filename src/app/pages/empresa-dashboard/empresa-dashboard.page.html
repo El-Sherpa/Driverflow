@@ -16,13 +16,46 @@
   <div class="dashboard-wrapper">
     <div class="grid-background"></div>
 
-    <!-- Header / Welcome -->
     <div class="welcome-section">
       <h1 class="welcome-title">Panel de Control Flota</h1>
       <p class="welcome-subtitle">Estado actual de sus vehículos y servicios.</p>
     </div>
 
-    <!-- Stats Grid -->
+    <div class="vehicle-selector-section">
+      <div class="selector-card">
+        <div class="selector-header">
+          <ion-icon name="car-sport-outline"></ion-icon>
+          <span>Seleccionar Vehículo</span>
+        </div>
+        <ion-select
+          [(ngModel)]="selectedVehicleId"
+          (ionChange)="onVehicleChange()"
+          placeholder="-- Todos los vehículos --"
+          interface="popover"
+          class="vehicle-dropdown"
+        >
+          <ion-select-option [value]="null">Todos los vehículos</ion-select-option>
+          <ion-select-option *ngFor="let v of vehicles" [value]="v.id">
+            {{ v.plate }} - {{ v.name }}
+          </ion-select-option>
+        </ion-select>
+        <div class="selector-actions">
+          <button class="btn-action" [disabled]="!selectedVehicleId" (click)="viewVehicle()">
+            <ion-icon name="eye-outline"></ion-icon>
+            Ver Detalles
+          </button>
+          <button class="btn-action btn-telemetry" [disabled]="!selectedVehicleId" (click)="viewTelemetry()">
+            <ion-icon name="pulse-outline"></ion-icon>
+            Telemetría
+          </button>
+        </div>
+      </div>
+      <button class="btn-view-all" (click)="viewAllVehicles()">
+        <ion-icon name="list-outline"></ion-icon>
+        Ver Todos los Vehículos
+      </button>
+    </div>
+
     <div class="stats-grid">
       <div class="stat-card" *ngFor="let stat of stats">
         <div class="stat-icon" [style.background-color]="stat.color + '20'" [style.color]="stat.color">
@@ -35,20 +68,17 @@
       </div>
     </div>
 
-    <!-- Main Sections -->
     <div class="main-sections">
-      <!-- Fleet Status Map -->
       <div class="card">
         <div class="card-header">
           <h2>{{ t('ESTADO_FLOTA') }}</h2>
-          <button class="btn-text">Ver Todo</button>
+          <button class="btn-text" (click)="viewAllVehicles()">Ver Todo</button>
         </div>
         <div class="fleet-mini-map">
           <div id="mini-map" class="map-overlay"></div>
         </div>
       </div>
 
-      <!-- Recent Activity -->
       <div class="card">
         <div class="card-header">
           <h2>{{ t('ACTIVIDAD_RECIENTE') }}</h2>

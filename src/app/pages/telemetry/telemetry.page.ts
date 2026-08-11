@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { VehicleService, Vehicle } from '../../services/vehicle.service';
 import { TranslationService } from '../../services/translation.service';
 
 @Component({
@@ -13,9 +14,22 @@ import { TranslationService } from '../../services/translation.service';
   imports: [CommonModule, IonicModule]
 })
 export class TelemetryPage implements OnInit {
-  vehicle = {
+  vehicle: Vehicle = {
+    id: 1,
     name: 'Yamaha MT-03',
-    plate: 'GHT-45F'
+    plate: 'GHT-45F',
+    brand: 'Yamaha',
+    model: '2024',
+    color: 'Gris/Rojo',
+    year: '2024',
+    image: 'assets/images/vehicle-placeholder.png',
+    status: 'En línea',
+    nextService: '2026-03-15',
+    gpsStatus: 'ONLINE',
+    odometer: 15423,
+    speed: { current: 65, average: 52, max: 120 },
+    acceleration: { current: 0.45, average: 0.32, max: 0.85 },
+    gyroscope: { pitch: 2.3, roll: 1.1, yaw: 45.2 }
   };
 
   speed = {
@@ -56,21 +70,67 @@ export class TelemetryPage implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
+    private vehicleService: VehicleService,
     private translationService: TranslationService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['id']) {
+        const found = this.vehicleService.getVehicleById(+params['id']);
+        if (found) {
+          this.vehicle = found;
+          this.updateTelemetryData(found);
+        }
+      }
+    });
+  }
+
+  private updateTelemetryData(vehicle: Vehicle) {
+    this.speed = {
+      current: vehicle.speed.current,
+      average: vehicle.speed.average,
+      max: vehicle.speed.max,
+      unit: 'km/h'
+    };
+    this.odometer = {
+      total: vehicle.odometer,
+      unit: 'km'
+    };
+    this.gyroscope = {
+      pitch: vehicle.gyroscope.pitch,
+      roll: vehicle.gyroscope.roll,
+      yaw: vehicle.gyroscope.yaw,
+      pitchLabel: 'Inclinación',
+      rollLabel: 'Balanceo',
+      yawLabel: 'Giro'
+    };
+    this.acceleration = {
+      current: vehicle.acceleration.current,
+      average: vehicle.acceleration.average,
+      max: vehicle.acceleration.max,
+      unit: 'G'
+    };
+    this.generateHistory();
+  }
+
+  private generateHistory() {
+    const baseSpeed = this.speed.current;
+    this.telemetryHistory = Array.from({ length: 5 }, (_, i) => ({
+      time: `14:${30 - i}:${String(55 - i * 5).padStart(2, '0')}`,
+      speed: Math.max(0, baseSpeed - i * 3),
+      acceleration: +(Math.random() * 0.4 + 0.1).toFixed(2)
+    }));
+  }
+
+  goToVehicle() {
+    this.router.navigate(['/vehicle'], { queryParams: { id: this.vehicle.id } });
+  }
 
   goBack() {
-    const user = this.authService.currentUserValue;
-    if (user?.role === 'empresa') {
-      this.router.navigate(['/empresa-dashboard']);
-    } else if (user?.role === 'admin') {
-      this.router.navigate(['/admin-dashboard']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    window.history.back();
   }
 
   t(key: string): string {

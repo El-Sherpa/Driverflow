@@ -46,12 +46,6 @@
               <ion-label>{{ t('ADMIN_PANEL') }}</ion-label>
             </ion-item>
 
-            <!-- Mi Vehículo (Empresa) -->
-            <ion-item button class="menu-item" routerLink="/vehicle" *ngIf="role === 'empresa'" routerLinkActive="active-item">
-              <ion-icon slot="start" name="car-outline"></ion-icon>
-              <ion-label>{{ t('MI_VEHICULO') }}</ion-label>
-            </ion-item>
-
             <!-- GPS (Empresa / Admin) -->
             <ion-item button class="menu-item" routerLink="/gps" routerLinkActive="active-item">
               <ion-icon slot="start" name="locate-outline"></ion-icon>

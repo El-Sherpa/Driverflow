@@ -48,13 +48,125 @@
 .welcome-section {
   position: relative;
   z-index: 2;
-  margin: 10px 0 30px;
+  margin: 10px 0 20px;
   
   h1 {
     color: white;
     font-size: 2.2rem;
     font-weight: 400;
     margin: 0;
+  }
+}
+
+.vehicle-selector-section {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 20px;
+
+  .selector-card {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 10px;
+    backdrop-filter: blur(8px);
+
+    .selector-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+
+      ion-icon {
+        color: #3b82f6;
+        font-size: 1.2rem;
+      }
+
+      span {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+    }
+
+    .vehicle-dropdown {
+      --background: rgba(15, 23, 42, 0.5);
+      --color: white;
+      --placeholder-color: rgba(255, 255, 255, 0.4);
+      --icon-color: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .selector-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+
+      .btn-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 10px;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+
+        &:not(:disabled):active {
+          background: rgba(59, 130, 246, 0.2);
+        }
+
+        ion-icon {
+          font-size: 1rem;
+        }
+
+        &.btn-telemetry {
+          border-color: rgba(16, 185, 129, 0.3);
+          background: rgba(16, 185, 129, 0.1);
+          color: #10b981;
+
+          &:not(:disabled):active {
+            background: rgba(16, 185, 129, 0.2);
+          }
+        }
+      }
+    }
+  }
+
+  .btn-view-all {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    background: transparent;
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    ion-icon {
+      font-size: 1rem;
+    }
+
+    &:active {
+      background: rgba(255, 255, 255, 0.05);
+    }
   }
 }
 

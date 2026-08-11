@@ -98,6 +98,30 @@
   }
 }
 
+ion-popover {
+  --background: #1e293b;
+  --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+
+  ion-item {
+    --background: transparent;
+    --color: white;
+    --min-height: 44px;
+    --padding-start: 16px;
+    font-weight: 500;
+
+    &:hover {
+      --background: rgba(59, 130, 246, 0.15);
+    }
+
+    ion-label {
+      color: white !important;
+      font-weight: 500;
+    }
+  }
+}
+
 .search-group {
   display: flex;
   align-items: center;
@@ -464,5 +488,71 @@ ion-modal.cyber-modal-container {
     border: 1px solid rgba(59, 130, 246, 0.3);
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
     overflow: hidden;
+  }
+}
+
+.cyber-alert {
+  --backdrop-opacity: 0.8;
+
+  &::part(backdrop) {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  &::part(content) {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+  }
+
+  &::part(header) {
+    background: #1e293b;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px 24px 12px;
+
+    .alert-title {
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+  }
+
+  &::part(message) {
+    background: #1e293b;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 16px 24px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+
+    strong {
+      color: #ef4444;
+    }
+  }
+
+  &::part(buttons) {
+    background: #1e293b;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 8px 16px 16px;
+    gap: 10px;
+  }
+
+  .alert-btn-cancel {
+    --background: rgba(255, 255, 255, 0.05);
+    --color: #94a3b8;
+    --border-radius: 12px;
+    font-weight: 600;
+    text-transform: none;
+    font-size: 0.9rem;
+    height: 44px;
+  }
+
+  .alert-btn-danger {
+    --background: #ef4444;
+    --color: white;
+    --border-radius: 12px;
+    font-weight: 700;
+    text-transform: none;
+    font-size: 0.9rem;
+    height: 44px;
   }
 }

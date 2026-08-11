@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import * as maplibregl from 'maplibre-gl';
+import { VehicleService, Vehicle } from '../../services/vehicle.service';
 import { TranslationService } from '../../services/translation.service';
+import * as maplibregl from 'maplibre-gl';
 
 @Component({
   selector: 'app-empresa-dashboard',
@@ -17,6 +18,9 @@ import { TranslationService } from '../../services/translation.service';
 export class EmpresaDashboardPage implements OnInit, AfterViewInit, OnDestroy {
   companyName: string = 'Transportes Global S.A.S';
   map!: maplibregl.Map;
+
+  vehicles: Vehicle[] = [];
+  selectedVehicleId: number | null = null;
 
   stats = [
     { label: 'VEHICULOS_ACTIVOS', value: '42', icon: 'car-outline', color: '#3b82f6' },
@@ -35,6 +39,7 @@ export class EmpresaDashboardPage implements OnInit, AfterViewInit, OnDestroy {
     private toastController: ToastController,
     private authService: AuthService,
     private router: Router,
+    private vehicleService: VehicleService,
     private translationService: TranslationService
   ) { }
 
@@ -43,6 +48,7 @@ export class EmpresaDashboardPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.vehicles = this.vehicleService.getAllVehicles();
     this.updateStatsLabels();
     this.translationService.currentLanguage$.subscribe(() => {
       this.updateStatsLabels();
@@ -55,6 +61,28 @@ export class EmpresaDashboardPage implements OnInit, AfterViewInit, OnDestroy {
       this.stats[1].label = this.t('ALERTAS_HOY');
       this.stats[2].label = this.t('ESTADO_FLOTA');
     }
+  }
+
+  onVehicleChange() {
+    if (this.selectedVehicleId) {
+      this.vehicleService.selectVehicle(this.vehicleService.getVehicleById(this.selectedVehicleId)!);
+    }
+  }
+
+  viewVehicle() {
+    if (this.selectedVehicleId) {
+      this.router.navigate(['/vehicle'], { queryParams: { id: this.selectedVehicleId } });
+    }
+  }
+
+  viewTelemetry() {
+    if (this.selectedVehicleId) {
+      this.router.navigate(['/telemetry'], { queryParams: { id: this.selectedVehicleId } });
+    }
+  }
+
+  viewAllVehicles() {
+    this.router.navigate(['/vehicle-list']);
   }
 
   ngAfterViewInit() {
@@ -71,15 +99,13 @@ export class EmpresaDashboardPage implements OnInit, AfterViewInit, OnDestroy {
     this.map = new maplibregl.Map({
       container: 'mini-map',
       style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-      center: [-74.0721, 4.7110], // Bogotá
+      center: [-74.0721, 4.7110],
       zoom: 11,
       attributionControl: false
     });
 
     this.map.on('load', () => {
-      // Simular marcadores de flota para la empresa
       this.addFleetMarkers();
-      // Forzar resize inmediato y luego uno retardado para asegurar renderizado correcto
       this.map.resize();
       setTimeout(() => {
         if (this.map) this.map.resize();

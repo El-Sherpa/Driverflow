@@ -4,7 +4,6 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-
 import { TranslationService } from '../../services/translation.service';
 
 @Component({

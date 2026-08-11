@@ -48,6 +48,12 @@ const routes: Routes = [
     loadComponent: () => import('./pages/vehicle/vehicle.page').then(m => m.VehiclePage)
   },
   {
+    path: 'vehicle-list',
+    loadComponent: () => import('./pages/vehicle-list/vehicle-list.page').then(m => m.VehicleListPage),
+    canActivate: [RoleGuard],
+    data: { roles: ['admin', 'empresa'] }
+  },
+  {
     path: 'plans',
     loadComponent: () => import('./pages/plans/plans.page').then(m => m.PlansPage),
     canActivate: [RoleGuard],
@@ -100,7 +106,7 @@ const routes: Routes = [
     path: 'telemetry',
     loadComponent: () => import('./pages/telemetry/telemetry.page').then(m => m.TelemetryPage),
     canActivate: [RoleGuard],
-    data: { roles: ['admin', 'empresa'] }
+    data: { roles: ['admin', 'empresa', 'cliente'] }
   },
   {
     path: 'chat-list',

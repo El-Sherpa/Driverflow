@@ -7,10 +7,23 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button color="danger" class="close-btn">
+      <ion-button (click)="goBack()" color="danger" class="close-btn">
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar class="vehicle-selector-toolbar" *ngIf="showVehicleSelector">
+    <ion-select
+      [(ngModel)]="selectedVehicleId"
+      (ionChange)="onVehicleSwitch()"
+      placeholder="Seleccionar vehículo"
+      interface="popover"
+      class="vehicle-select"
+    >
+      <ion-select-option *ngFor="let v of allVehicles" [value]="v.id">
+        {{ v.plate }} - {{ v.name }}
+      </ion-select-option>
+    </ion-select>
   </ion-toolbar>
 </ion-header>
 
@@ -18,56 +31,75 @@
   <div class="vehicle-wrapper">
     <div class="grid-background"></div>
 
-    <div class="main-card">
-      <div class="image-container">
-        <div class="placeholder-img">
-          <span>IMAGEN DEL VEHÍCULO</span>
-        </div>
-      </div>
-      <h1 class="vehicle-name">{{ vehicle.name }}</h1>
-      <div class="plate-badge">{{ vehicle.plate }}</div>
+    <!-- Loading state -->
+    <div class="loading-container" *ngIf="loading">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Cargando vehículo...</p>
     </div>
 
-    <div class="specs-grid">
-      <div class="spec-item">
-        <span class="spec-value">{{ vehicle.brand }}</span>
-        <span class="spec-label">MARCA</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-value">{{ vehicle.model }}</span>
-        <span class="spec-label">MODELO</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-value">{{ vehicle.color }}</span>
-        <span class="spec-label">COLOR</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-value">{{ vehicle.year }}</span>
-        <span class="spec-label">AÑO</span>
-      </div>
+    <!-- No vehicle found -->
+    <div class="empty-state" *ngIf="!loading && !vehicle">
+      <ion-icon name="car-outline" class="empty-icon"></ion-icon>
+      <h2>No se encontró vehículo</h2>
+      <p>No hay vehículo asignado a tu cuenta.</p>
+      <ion-button expand="block" class="action-btn" (click)="goBack()">
+        VOLVER
+      </ion-button>
     </div>
 
-    <div class="docs-section">
-      <h3 class="section-title">DOCUMENTACIÓN Y VENCIMIENTOS</h3>
-      
-      <div class="doc-card" *ngFor="let doc of docs">
-        <div class="doc-info">
-          <h4 class="doc-title">{{ doc.title }}</h4>
-          <p class="doc-expiry">Vence: {{ doc.expiry }}</p>
+    <!-- Vehicle details -->
+    <ng-container *ngIf="!loading && vehicle">
+      <div class="main-card">
+        <div class="image-container">
+          <div class="placeholder-img">
+            <span>IMAGEN DEL VEHÍCULO</span>
+          </div>
         </div>
-        <div class="doc-status" [ngClass]="doc.statusClass">
-          {{ doc.status }}
+        <h1 class="vehicle-name">{{ vehicle.name }}</h1>
+        <div class="plate-badge">{{ vehicle.plate }}</div>
+      </div>
+
+      <div class="specs-grid">
+        <div class="spec-item">
+          <span class="spec-value">{{ vehicle.brand }}</span>
+          <span class="spec-label">MARCA</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-value">{{ vehicle.model }}</span>
+          <span class="spec-label">MODELO</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-value">{{ vehicle.color }}</span>
+          <span class="spec-label">COLOR</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-value">{{ vehicle.year }}</span>
+          <span class="spec-label">AÑO</span>
         </div>
       </div>
-    </div>
 
-    <ion-button expand="block" class="action-btn telemetry-btn" (click)="goToTelemetry()">
-      <ion-icon slot="start" name="pulse-outline"></ion-icon>
-      {{ t('VIEW_TELEMETRY') }}
-    </ion-button>
+      <div class="docs-section">
+        <h3 class="section-title">DOCUMENTACIÓN Y VENCIMIENTOS</h3>
 
-    <ion-button expand="block" class="action-btn" (click)="updateData()">
-      ACTUALIZAR DATOS
-    </ion-button>
+        <div class="doc-card" *ngFor="let doc of docs">
+          <div class="doc-info">
+            <h4 class="doc-title">{{ doc.title }}</h4>
+            <p class="doc-expiry">Vence: {{ doc.expiry }}</p>
+          </div>
+          <div class="doc-status" [ngClass]="doc.statusClass">
+            {{ doc.status }}
+          </div>
+        </div>
+      </div>
+
+      <ion-button expand="block" class="action-btn telemetry-btn" (click)="goToTelemetry()">
+        <ion-icon slot="start" name="pulse-outline"></ion-icon>
+        {{ t('VIEW_TELEMETRY') }}
+      </ion-button>
+
+      <ion-button expand="block" class="action-btn" (click)="updateData()">
+        ACTUALIZAR DATOS
+      </ion-button>
+    </ng-container>
   </div>
 </ion-content>

@@ -19,16 +19,17 @@
   <div class="telemetry-wrapper">
     <div class="grid-background"></div>
 
-    <!-- Vehicle info -->
     <div class="vehicle-mini-card">
       <ion-icon name="car-sport-outline" class="vehicle-icon"></ion-icon>
       <div class="vehicle-info">
         <span class="vehicle-name">{{ vehicle.name }}</span>
         <span class="vehicle-plate">{{ vehicle.plate }}</span>
       </div>
+      <button class="btn-go-vehicle" (click)="goToVehicle()">
+        <ion-icon name="eye-outline"></ion-icon>
+      </button>
     </div>
 
-    <!-- Speed Gauge -->
     <div class="gauge-card">
       <div class="gauge-header">
         <ion-icon name="speedometer-outline"></ion-icon>
@@ -50,7 +51,6 @@
       </div>
     </div>
 
-    <!-- Odometer & Acceleration -->
     <div class="info-grid">
       <div class="info-card odometer">
         <div class="card-icon"><ion-icon name="map-outline"></ion-icon></div>
@@ -64,7 +64,6 @@
       </div>
     </div>
 
-    <!-- Acceleration detail -->
     <div class="gauge-card">
       <div class="gauge-header">
         <ion-icon name="flash-outline"></ion-icon>
@@ -85,7 +84,6 @@
       </div>
     </div>
 
-    <!-- Gyroscope -->
     <div class="gyro-card">
       <div class="gyro-header">
         <ion-icon name="phone-portrait-outline"></ion-icon>
@@ -113,7 +111,6 @@
       </div>
     </div>
 
-    <!-- Telemetry History -->
     <div class="history-section">
       <h3 class="section-title">{{ t('TELEMETRY_HISTORY') }}</h3>
       <div class="history-table">

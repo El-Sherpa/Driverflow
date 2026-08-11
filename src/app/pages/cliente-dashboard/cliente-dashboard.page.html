@@ -47,10 +47,6 @@
     <div class="section-container">
       <div class="section-header">
         <h3>Mis Vehículos</h3>
-        <button class="btn-add">
-          <ion-icon name="add-circle-outline"></ion-icon>
-          AÑADIR
-        </button>
       </div>
 
       <div class="vehicle-grid">
@@ -74,7 +70,10 @@
               <ion-icon name="time-outline"></ion-icon>
               <span>Próximo servicio: <strong>{{ vehicle.nextService }}</strong></span>
             </div>
-            <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+            <button class="btn-telemetry" (click)="viewTelemetry(vehicle, $event)">
+              <ion-icon name="pulse-outline"></ion-icon>
+              Telemetría
+            </button>
           </div>
         </div>
       </div>

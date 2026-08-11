@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Observable, Subscription } from 'rxjs';
 import { TranslationService } from './services/translation.service';
+import { VehicleService, Vehicle } from './services/vehicle.service';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,24 +18,37 @@ export class AppComponent implements OnInit, OnDestroy {
   userRole$: Observable<string | null>;
   private langSub!: Subscription;
 
+  clientVehicles: Vehicle[] = [];
+
   constructor(
     private authService: AuthService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private vehicleService: VehicleService,
+    private router: Router
   ) {
     this.userRole$ = this.authService.getUserRole();
   }
 
   ngOnInit() {
-    // Escuchar cambios de idioma para forzar detección de cambios si es necesario
-    this.langSub = this.translationService.currentLanguage$.subscribe(() => {
-      // El pipe async y los métodos t() se encargarán de actualizar la vista
-    });
+    this.langSub = this.translationService.currentLanguage$.subscribe(() => {});
+    this.loadClientVehicles();
   }
 
   ngOnDestroy() {
     if (this.langSub) {
       this.langSub.unsubscribe();
     }
+  }
+
+  loadClientVehicles() {
+    const v1 = this.vehicleService.getVehicleByPlate('ABC-123');
+    const v2 = this.vehicleService.getVehicleByPlate('LMN-234');
+    if (v1) this.clientVehicles.push(v1);
+    if (v2) this.clientVehicles.push(v2);
+  }
+
+  goToVehicle(id: number) {
+    this.router.navigate(['/vehicle'], { queryParams: { id } });
   }
 
   t(key: string): string {

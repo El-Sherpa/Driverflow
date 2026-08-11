@@ -4,6 +4,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { VehicleService } from '../../services/vehicle.service';
 
 @Component({
   selector: 'app-cliente-dashboard',
@@ -20,7 +21,7 @@ export class ClienteDashboardPage {
   };
 
   myVehicles = [
-    { id: 1, plate: 'HJK-901', model: 'Toyota Corolla', nextService: '2024-05-20', status: 'Al día' },
+    { id: 1, plate: 'ABC-123', model: 'Toyota Corolla', nextService: '2024-05-20', status: 'Al día' },
     { id: 2, plate: 'LMN-234', model: 'Mazda CX-5', nextService: '2024-04-10', status: 'Pendiente SOAT' }
   ];
 
@@ -28,7 +29,8 @@ export class ClienteDashboardPage {
     private alertController: AlertController,
     private toastController: ToastController,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private vehicleService: VehicleService
   ) {}
 
   async requestAssistance() {
@@ -48,21 +50,23 @@ export class ClienteDashboardPage {
     await alert.present();
   }
 
-  async viewVehicleDetails(vehicle: any) {
-    const alert = await this.alertController.create({
-      header: `DETALLES: ${vehicle.plate}`,
-      subHeader: vehicle.model.toUpperCase(),
-      message: `PRÓXIMO SERVICIO: ${vehicle.nextService}\nESTADO: ${vehicle.status.toUpperCase()}`,
-      cssClass: 'cyber-alert',
-      buttons: [
-        {
-          text: 'CERRAR',
-          role: 'cancel',
-          cssClass: 'cyber-button'
-        }
-      ]
-    });
-    await alert.present();
+  viewVehicleDetails(vehicle: any) {
+    const found = this.vehicleService.getVehicleByPlate(vehicle.plate);
+    if (found) {
+      this.router.navigate(['/vehicle'], { queryParams: { id: found.id } });
+    } else {
+      this.router.navigate(['/vehicle']);
+    }
+  }
+
+  viewTelemetry(vehicle: any, event: Event) {
+    event.stopPropagation();
+    const found = this.vehicleService.getVehicleByPlate(vehicle.plate);
+    if (found) {
+      this.router.navigate(['/telemetry'], { queryParams: { id: found.id } });
+    } else {
+      this.router.navigate(['/telemetry']);
+    }
   }
 
   async showToast(msg: string) {
