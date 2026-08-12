@@ -4,6 +4,10 @@ import { RoleGuard } from './guards/role.guard';
 
 const routes: Routes = [
   {
+    path: 'location-permission',
+    loadComponent: () => import('./pages/location-permission/location-permission.page').then(m => m.LocationPermissionPage)
+  },
+  {
     path: 'gps',
     loadComponent: () => import('./pages/gps/gps.page').then(m => m.GpsPage)
   },

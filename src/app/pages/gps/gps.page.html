@@ -1,5 +1,16 @@
 <ion-content [fullscreen]="true" class="gps-content">
   <div class="map-wrapper">
+    <!-- Overlay de Carga Asíncrona del Mapa -->
+    <div class="map-loading-overlay" *ngIf="mapLoading">
+      <div class="loader-card">
+        <ion-spinner name="crescent" class="loader-spinner"></ion-spinner>
+        <p class="loader-text">{{ t(mapStatus) }}</p>
+        <div class="loader-bar">
+          <div class="loader-bar-fill"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Map Container Real (MapLibre) -->
     <div #mapContainer class="real-map" [class.gps-off]="!gpsEnabled"></div>
 

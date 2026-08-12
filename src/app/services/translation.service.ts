@@ -192,7 +192,21 @@ export class TranslationService {
       ADMIN_CHAT_EMPTY: 'Las empresas se comunicarán aquí contigo',
       INICIAR_CHAT_CON_ADMINISTRADOR: 'Iniciar chat con administrador',
       ESCRIBE_TU_PRIMER_MENSAJE: 'Escribe tu primer mensaje',
-      ESCRIBE_UN_MENSAJE: 'Escribe un mensaje...'
+      ESCRIBE_UN_MENSAJE: 'Escribe un mensaje...',
+
+      // Permiso de ubicación
+      PERMISO_UBICACION_TITULO: 'Activa tu ubicación',
+      PERMISO_UBICACION_DESC: 'DriveFlow necesita acceso a tu ubicación para rastrear tu vehículo en tiempo real.',
+      PERMISO_UBICACION_BTN: 'CONCEDER PERMISO',
+      PERMISO_UBICACION_SALTAR: 'Omitir por ahora',
+      LOCATION_PERMISSION_GRANTED: 'Permiso de ubicación concedido',
+      LOCATION_PERMISSION_DENIED: 'Permiso denegado. Puedes intentarlo de nuevo.',
+
+      // Carga del mapa
+      CARGANDO_LIBRERIA: 'Cargando librería de mapas…',
+      OBTENIENDO_UBICACION: 'Obteniendo tu ubicación…',
+      INICIALIZANDO_MAPA: 'Inicializando mapa…',
+      MAPA_LISTO: 'Mapa listo'
     },
     en: {
       // General
@@ -371,7 +385,21 @@ export class TranslationService {
       ADMIN_CHAT_EMPTY: 'Companies will reach out to you here',
       INICIAR_CHAT_CON_ADMINISTRADOR: 'Start chat with administrator',
       ESCRIBE_TU_PRIMER_MENSAJE: 'Write your first message',
-      ESCRIBE_UN_MENSAJE: 'Write a message...'
+      ESCRIBE_UN_MENSAJE: 'Write a message...',
+
+      // Location permission
+      PERMISO_UBICACION_TITULO: 'Enable your location',
+      PERMISO_UBICACION_DESC: 'DriveFlow needs access to your location to track your vehicle in real time.',
+      PERMISO_UBICACION_BTN: 'GRANT PERMISSION',
+      PERMISO_UBICACION_SALTAR: 'Skip for now',
+      LOCATION_PERMISSION_GRANTED: 'Location permission granted',
+      LOCATION_PERMISSION_DENIED: 'Permission denied. You can try again.',
+
+      // Map loading
+      CARGANDO_LIBRERIA: 'Loading map library…',
+      OBTENIENDO_UBICACION: 'Getting your location…',
+      INICIALIZANDO_MAPA: 'Initializing map…',
+      MAPA_LISTO: 'Map ready'
     }
   };
 

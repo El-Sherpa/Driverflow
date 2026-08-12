@@ -4,8 +4,8 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { TranslationService } from '../../services/translation.service';
 import { FormsModule } from '@angular/forms';
-import * as maplibregl from 'maplibre-gl';
 import { Geolocation } from '@capacitor/geolocation';
+import type { Map as MapLibreMap, Marker, GeoJSONSource, LngLatBounds } from 'maplibre-gl';
 
 @Component({
   selector: 'app-gps',
@@ -18,20 +18,24 @@ export class GpsPage implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mapContainer') mapContainer!: ElementRef;
   @ViewChild('markerVehicle') markerVehicle!: ElementRef;
   @ViewChild('markerDestination') markerDestination!: ElementRef;
-  
-  map!: maplibregl.Map;
+
+  map!: MapLibreMap;
+  private mb: typeof import('maplibre-gl') | null = null;
   gpsEnabled: boolean = true;
   routeVisible: boolean = false;
 
-  vehicleMarkerInstance?: maplibregl.Marker;
-  destinationMarkerInstance?: maplibregl.Marker;
+  mapLoading: boolean = true;
+  mapStatus: string = 'CARGANDO_LIBRERIA';
+
+  vehicleMarkerInstance?: Marker;
+  destinationMarkerInstance?: Marker;
 
   // Ubicaciones
   userCoords: [number, number] = [-74.0721, 4.7110]; // Bogotá por defecto
   officeCoords: [number, number] = [-74.0621, 4.7210]; // Destino
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private translationService: TranslationService,
     private toastController: ToastController
   ) { }
@@ -44,30 +48,56 @@ export class GpsPage implements OnInit, AfterViewInit, OnDestroy {
 
   async initMap() {
     try {
-      // Intentar obtener ubicación real
-      const coordinates = await Geolocation.getCurrentPosition();
-      this.userCoords = [coordinates.coords.longitude, coordinates.coords.latitude];
-    } catch (e) {
-      console.warn('No se pudo obtener ubicación real, usando por defecto', e);
+      // 1. Cargar librería de mapas de forma asíncrona (poco a poco)
+      this.setMapStatus('CARGANDO_LIBRERIA');
+      const maplibregl = await import('maplibre-gl');
+      this.mb = maplibregl;
+      await this.delay(350);
+
+      // 2. Obtener ubicación real
+      this.setMapStatus('OBTENIENDO_UBICACION');
+      try {
+        const coordinates = await Geolocation.getCurrentPosition();
+        this.userCoords = [coordinates.coords.longitude, coordinates.coords.latitude];
+      } catch (e) {
+        console.warn('No se pudo obtener ubicación real, usando por defecto', e);
+      }
+      await this.delay(350);
+
+      // 3. Inicializar el mapa
+      this.setMapStatus('INICIALIZANDO_MAPA');
+      this.map = new maplibregl.Map({
+        container: this.mapContainer.nativeElement,
+        style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+        center: this.userCoords,
+        zoom: 14,
+        attributionControl: false
+      });
+
+      this.map.on('load', () => {
+        this.map.resize();
+        this.addMarkers();
+        this.setMapStatus('MAPA_LISTO');
+        this.mapLoading = false;
+      });
+    } catch (error) {
+      console.error('Error cargando el mapa', error);
+      this.mapLoading = false;
     }
+  }
 
-    this.map = new maplibregl.Map({
-      container: this.mapContainer.nativeElement,
-      style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-      center: this.userCoords,
-      zoom: 14,
-      attributionControl: false
-    });
+  private setMapStatus(key: string) {
+    this.mapStatus = key;
+  }
 
-    this.map.on('load', () => {
-      this.map.resize();
-      this.addMarkers();
-    });
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   addMarkers() {
+    if (!this.mb) return;
     // Marcador Vehículo (Mi Ubicación)
-    this.vehicleMarkerInstance = new maplibregl.Marker({
+    this.vehicleMarkerInstance = new this.mb.Marker({
       element: this.markerVehicle.nativeElement,
       anchor: 'bottom'
     })
@@ -75,7 +105,7 @@ export class GpsPage implements OnInit, AfterViewInit, OnDestroy {
     .addTo(this.map);
 
     // Marcador Destino (Oficina Central)
-    this.destinationMarkerInstance = new maplibregl.Marker({
+    this.destinationMarkerInstance = new this.mb.Marker({
       element: this.markerDestination.nativeElement,
       anchor: 'bottom'
     })
@@ -135,7 +165,7 @@ export class GpsPage implements OnInit, AfterViewInit, OnDestroy {
         };
 
         if (this.map.getSource('route')) {
-          (this.map.getSource('route') as maplibregl.GeoJSONSource).setData({
+          (this.map.getSource('route') as GeoJSONSource).setData({
             'type': 'Feature',
             'properties': {},
             'geometry': {
@@ -173,7 +203,7 @@ export class GpsPage implements OnInit, AfterViewInit, OnDestroy {
           });
         }
 
-        const bounds = new maplibregl.LngLatBounds();
+        const bounds = new (this.mb as typeof import('maplibre-gl')).LngLatBounds();
         coordinates.forEach((coord: [number, number]) => bounds.extend(coord));
         this.map.fitBounds(bounds, { padding: 50 });
       }

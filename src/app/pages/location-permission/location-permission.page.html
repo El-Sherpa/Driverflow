@@ -1,0 +1,28 @@
+<ion-content class="location-content" [fullscreen]="true">
+  <div class="location-wrapper">
+    <div class="location-card">
+      <div class="glow-icon">
+        <ion-icon name="location-outline" class="neon-pulse"></ion-icon>
+      </div>
+
+      <h1 class="location-title glitch" [attr.data-text]="t('PERMISO_UBICACION_TITULO')">
+        {{ t('PERMISO_UBICACION_TITULO') }}
+      </h1>
+
+      <p class="location-desc">
+        {{ t('PERMISO_UBICACION_DESC') }}
+      </p>
+
+      <ion-button expand="block" class="grant-btn" (click)="requestPermission()" [disabled]="requesting || granted">
+        <ion-spinner name="crescent" *ngIf="requesting"></ion-spinner>
+        <span *ngIf="!requesting && !granted">{{ t('PERMISO_UBICACION_BTN') }}</span>
+        <span *ngIf="granted" class="granted-text">
+          <ion-icon name="checkmark-circle"></ion-icon>
+          {{ t('LOCATION_PERMISSION_GRANTED') }}
+        </span>
+      </ion-button>
+
+      <button class="skip-btn" (click)="skip()">{{ t('PERMISO_UBICACION_SALTAR') }}</button>
+    </div>
+  </div>
+</ion-content>
